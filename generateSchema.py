@@ -155,7 +155,26 @@ def generate_string_field(field_name):
     return {
         "name": field_name,
         "datatype": "DT_STRING",
-        "tags": []
+        "tags": [
+                        {
+                            "name": "skyflow.options.default_dlp_policy",
+                            "values": [
+                                "PLAIN_TEXT"
+                            ]
+                        },
+                        {
+                            "name": "skyflow.options.operation",
+                            "values": [
+                                "EXACT_MATCH"
+                            ]
+                        },
+                        {
+                            "name": "skyflow.options.default_token_policy",
+                            "values": [
+                                "NON_DETERMINISTIC_UUID"
+                            ]
+                        }            
+        ]
     }
 
 # Generate skyflow IP address field definition
