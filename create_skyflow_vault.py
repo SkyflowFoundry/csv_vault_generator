@@ -31,4 +31,4 @@ def createVault(vault_schema, directory, bearer_token):
         return response.status_code, vault_id
     else:
         print(f"Vault Creation Error: {response.status_code} - {response.text}")
-        return response.status_code
+        return response.status_code, None

@@ -1,7 +1,15 @@
 import json
+import re
 from datetime import datetime
 from detect_data_type import detect_data_type  # type: ignore
 from getUserID import getUserId  # type: ignore
+
+def sanitize_field_name(field_name):
+    field_name = field_name.lower().strip()  # Lowercase and remove spaces
+    field_name = re.sub(r'[^a-z0-9_]', '_', field_name)  # Replace invalid chars
+    if not field_name[0].isalpha():
+        field_name = "f_" + field_name  # Ensure it starts with a letter
+    return field_name
 
 def get_skyflow_params (directory, bearer_token):
     # get paramteters from JSON parameters file
@@ -23,7 +31,8 @@ def get_skyflow_params (directory, bearer_token):
     return AccountId, Vault_URL, WorkspaceID, Vault_Name, Vault_Table_Name, Management_URL, user_id, Records_Batch_Size
 
 # Generate skyflow email field definition
-def generate_email_field(field_name):
+def generate_email_field(field_name_in):
+    field_name = sanitize_field_name(field_name_in)
     return {
   "name": field_name,
   "datatype": "DT_STRING",
@@ -93,7 +102,8 @@ def generate_email_field(field_name):
     }
 
 # Generate skyflow date field definition
-def generate_date_field(field_name):
+def generate_date_field(field_name_in):
+    field_name = sanitize_field_name(field_name_in)
     return {
   "name": field_name,
   "datatype": "DT_STRING",
@@ -151,7 +161,8 @@ def generate_date_field(field_name):
     }
 
 # Generate skyflow string field definition
-def generate_string_field(field_name):
+def generate_string_field(field_name_in):
+    field_name = sanitize_field_name(field_name_in)
     return {
         "name": field_name,
         "datatype": "DT_STRING",
@@ -178,7 +189,8 @@ def generate_string_field(field_name):
     }
 
 # Generate skyflow IP address field definition
-def generate_ip_address(field_name):
+def generate_ip_address(field_name_in):
+    field_name = sanitize_field_name(field_name_in)
     return {
           "name": field_name,
           "datatype": "DT_STRING",
@@ -219,7 +231,8 @@ def generate_ip_address(field_name):
     }
 
 # Generate int field definition
-def generate_int_field(field_name):
+def generate_int_field(field_name_in):
+    field_name = sanitize_field_name(field_name_in)
     return {
         "name": field_name,
         "datatype": "DT_STRING",
@@ -227,7 +240,8 @@ def generate_int_field(field_name):
     }
 
 # Generate skyflow email field definition
-def generate_us_ssn_field(field_name):
+def generate_us_ssn_field(field_name_in):
+    field_name = sanitize_field_name(field_name_in)
     return {
           "name": field_name,
           "datatype": "DT_STRING",
@@ -292,7 +306,8 @@ def generate_us_ssn_field(field_name):
           ]        
     }
 
-def add_field(schema, field_name, field_type):
+def add_field(schema, field_name_in, field_type):
+    field_name = sanitize_field_name(field_name_in)
     if field_type == "email":
         field_def = generate_email_field(field_name)
     elif field_type == "date":
