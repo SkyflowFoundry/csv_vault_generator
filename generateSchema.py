@@ -221,7 +221,7 @@ def generate_ip_address(field_name_in):
             },
             {
               "name": "skyflow.options.default_token_policy",
-              "values": ["RANDOM_TOKEN"]
+              "values": ["NON_DETERMINISTIC_UUID"]
             },
             {
               "name": "skyflow.options.display_name",
